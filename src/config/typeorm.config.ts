@@ -15,6 +15,7 @@ import { join } from 'path';
         username: config.get('DB_USERNAME', 'postgres'),
         password: config.get('DB_PASSWORD', 'postgres'),
         database: config.get('DB_NAME', 'educenter'),
+        ssl: config.get('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         entities: [join(__dirname, '..', 'features', '**', 'entities', '*.entity.{ts,js}')],
         migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
         synchronize: false,
