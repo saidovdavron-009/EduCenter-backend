@@ -1,0 +1,2 @@
+import { ApiProperty } from '@nestjs/swagger';
+export class AttendanceStatsResponse { @ApiProperty() present: number; @ApiProperty() absent: number; @ApiProperty() late: number; @ApiProperty() excused: number; @ApiProperty() percentage: number; }

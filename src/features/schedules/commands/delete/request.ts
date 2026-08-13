@@ -1,0 +1,1 @@
+export class DeleteScheduleRequest { id: string; }

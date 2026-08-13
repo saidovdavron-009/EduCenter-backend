@@ -1,0 +1,1 @@
+export class RemoveStudentFromGroupRequest { groupId: string; studentId: string; }

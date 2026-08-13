@@ -1,0 +1,1 @@
+export class PublishQuizResponse { id: string; isPublished: boolean; }

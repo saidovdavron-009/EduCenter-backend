@@ -1,0 +1,1 @@
+export class MarkReadRequest { id: string; }

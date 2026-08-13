@@ -1,0 +1,2 @@
+import { ApiProperty } from '@nestjs/swagger';
+export class HomeworkItem { @ApiProperty() id: string; @ApiProperty() title: string; @ApiProperty() groupName: string; @ApiProperty() teacherName: string; @ApiProperty() dueDate: Date; @ApiProperty() submissionsCount: number; }

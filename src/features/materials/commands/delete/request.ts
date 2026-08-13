@@ -1,0 +1,1 @@
+export class DeleteMaterialRequest { id: string; }

@@ -1,0 +1,2 @@
+import { ApiProperty } from '@nestjs/swagger';
+export class StudentsReportResponse { @ApiProperty() total: number; @ApiProperty() active: number; @ApiProperty() frozen: number; @ApiProperty() graduated: number; @ApiProperty() newThisMonth: number; @ApiProperty() topStudents: any[]; }

@@ -1,0 +1,1 @@
+export class DeleteTeacherRequest { id: string; }

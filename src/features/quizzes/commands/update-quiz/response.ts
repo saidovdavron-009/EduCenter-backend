@@ -1,0 +1,1 @@
+export class UpdateQuizResponse { id: string; title: string; isPublished: boolean; }

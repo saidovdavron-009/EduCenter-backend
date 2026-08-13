@@ -1,0 +1,1 @@
+export class DeleteInventoryItemResponse { message: string; }

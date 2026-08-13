@@ -1,0 +1,1 @@
+export class MarkAllReadRequest { userId: string; }

@@ -1,0 +1,2 @@
+import { ApiProperty } from '@nestjs/swagger';
+export class RevenueDataItem { @ApiProperty() month: string; @ApiProperty() revenue: number; @ApiProperty() expenses: number; @ApiProperty() profit: number; }
