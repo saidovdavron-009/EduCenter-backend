@@ -17,6 +17,9 @@ export class GetProfileResponse {
   @ApiProperty()
   isActive: boolean;
 
+  @ApiProperty()
+  isSuperAdmin: boolean;
+
   @ApiProperty({ nullable: true })
   avatarUrl: string | null;
 

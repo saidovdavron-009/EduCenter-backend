@@ -8,6 +8,7 @@ export class UpdateTeacherRequest {
   @ApiPropertyOptional() @IsOptional() @IsEmail() email?: string;
   @ApiPropertyOptional() @IsOptional() @IsArray() @IsString({ each: true }) subjects?: string[];
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0) experience?: number;
+  @ApiPropertyOptional({ description: 'Nechta guruhga biriktirish mumkin (bo\'sh — cheklovsiz)' }) @IsOptional() @IsNumber() @Min(1) maxGroups?: number;
   @ApiPropertyOptional({ enum: SalaryType }) @IsOptional() @IsEnum(SalaryType) salaryType?: SalaryType;
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0) salary?: number;
   @ApiPropertyOptional() @IsOptional() @IsString() bio?: string;

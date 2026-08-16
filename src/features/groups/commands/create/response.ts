@@ -5,6 +5,7 @@ export class CreateGroupResponse {
   @ApiProperty() name: string;
   @ApiProperty() subjectId: string;
   @ApiProperty() teacherId: string;
+  @ApiProperty() branchId: string;
   @ApiProperty() capacity: number;
   @ApiProperty() monthlyFee: number;
   @ApiProperty({ enum: GroupStatus }) status: GroupStatus;

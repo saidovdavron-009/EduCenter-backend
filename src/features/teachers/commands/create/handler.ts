@@ -38,6 +38,7 @@ export class CreateTeacherHandler {
         subjects: dto.subjects || [], experience: dto.experience,
         salaryType: dto.salaryType || SalaryType.MONTHLY, salary: dto.salary || 0,
         bio: dto.bio, hireDate: dto.hireDate ? new Date(dto.hireDate) : null,
+        maxGroups: dto.maxGroups ?? null,
       });
       await qr.manager.save(teacher);
       await qr.commitTransaction();

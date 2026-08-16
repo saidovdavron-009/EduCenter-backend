@@ -15,5 +15,6 @@ export class LoginResponse {
     loginId: string | null;
     role: UserRole;
     avatarUrl: string | null;
+    isSuperAdmin: boolean;
   };
 }

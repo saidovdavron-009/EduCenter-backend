@@ -18,6 +18,9 @@ export class Group {
   @Column({ name: 'teacher_id', type: 'uuid' })
   teacherId: string;
 
+  @Column({ name: 'branch_id', type: 'uuid', nullable: true })
+  branchId: string;
+
   @Column({ type: 'int', default: 20 })
   capacity: number;
 

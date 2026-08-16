@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { join } from 'path';
 import * as compression from 'compression';
+import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from '@common/filters/http-exception.filter';
@@ -34,6 +35,7 @@ async function bootstrap() {
     }),
   );
   app.use(compression());
+  app.use(cookieParser());
 
   const corsOrigin = config.get('CORS_ORIGIN', '*');
   app.enableCors({

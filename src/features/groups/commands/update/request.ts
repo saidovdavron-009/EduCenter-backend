@@ -6,6 +6,7 @@ export class UpdateGroupRequest {
   @ApiPropertyOptional() @IsOptional() @IsString() name?: string;
   @ApiPropertyOptional() @IsOptional() @IsUUID() subjectId?: string;
   @ApiPropertyOptional() @IsOptional() @IsUUID() teacherId?: string;
+  @ApiPropertyOptional() @IsOptional() @IsUUID() branchId?: string;
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(1) capacity?: number;
   @ApiPropertyOptional() @IsOptional() @IsString() level?: string;
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0) monthlyFee?: number;

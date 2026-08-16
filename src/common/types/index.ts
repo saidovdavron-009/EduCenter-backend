@@ -127,6 +127,7 @@ export interface RequestUser {
   id: string;
   email: string | null;
   role: UserRole;
+  isSuperAdmin: boolean;
 }
 
 export enum LeadStatus {

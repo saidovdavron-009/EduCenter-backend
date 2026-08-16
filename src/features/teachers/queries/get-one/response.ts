@@ -8,6 +8,7 @@ export class GetOneTeacherResponse {
   @ApiProperty({ nullable: true }) email: string | null;
   @ApiProperty({ type: [String] }) subjects: string[];
   @ApiProperty({ nullable: true }) experience: number | null;
+  @ApiProperty({ nullable: true }) maxGroups: number | null;
   @ApiProperty({ enum: SalaryType }) salaryType: SalaryType;
   @ApiProperty() salary: number;
   @ApiProperty({ nullable: true }) avatarUrl: string | null;

@@ -54,7 +54,7 @@ export class LoginHandler {
     return {
       accessToken,
       refreshToken: refreshTokenValue,
-      user: { id: user.id, email: user.email, loginId: user.loginId, role: user.role, avatarUrl: user.avatarUrl },
+      user: { id: user.id, email: user.email, loginId: user.loginId, role: user.role, avatarUrl: user.avatarUrl, isSuperAdmin: user.isSuperAdmin },
     };
   }
 }

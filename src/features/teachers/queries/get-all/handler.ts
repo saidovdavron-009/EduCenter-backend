@@ -29,7 +29,7 @@ export class GetAllTeachersHandler {
     const countParams = [...params];
     const sql = `
       SELECT t.id, t.full_name as "fullName", t.phone, t.avatar_url as "avatarUrl",
-             string_to_array(t.subjects, ',') as subjects, t.salary, t.is_active as "isActive", t.created_at as "createdAt",
+             string_to_array(t.subjects, ',') as subjects, t.salary, t.max_groups as "maxGroups", t.is_active as "isActive", t.created_at as "createdAt",
              COUNT(DISTINCT g.id) FILTER (WHERE g.status = 'ACTIVE') as "groupCount"
       FROM teachers t
       LEFT JOIN groups g ON g.teacher_id = t.id

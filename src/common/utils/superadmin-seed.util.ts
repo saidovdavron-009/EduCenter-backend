@@ -21,8 +21,8 @@ export async function seedSuperAdmin(dataSource: DataSource, config: ConfigServi
   const existing = await userRepo.findOne({ where: { loginId } });
 
   if (existing) {
-    if (existing.role !== UserRole.ADMIN || !existing.isActive || !(await bcrypt.compare(password, existing.passwordHash))) {
-      await userRepo.update(existing.id, { passwordHash, role: UserRole.ADMIN, isActive: true });
+    if (existing.role !== UserRole.ADMIN || !existing.isActive || !existing.isSuperAdmin || !(await bcrypt.compare(password, existing.passwordHash))) {
+      await userRepo.update(existing.id, { passwordHash, role: UserRole.ADMIN, isActive: true, isSuperAdmin: true });
       logger.log(`Superadmin (ID: ${loginId}) .env bilan sinxronlashtirildi`);
     }
     return;
@@ -33,6 +33,7 @@ export async function seedSuperAdmin(dataSource: DataSource, config: ConfigServi
     passwordHash,
     role: UserRole.ADMIN,
     isActive: true,
+    isSuperAdmin: true,
     email: '1',
     phone: '1',
   });

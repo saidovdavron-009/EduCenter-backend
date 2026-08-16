@@ -29,6 +29,7 @@ export class GetProfileHandler {
       loginId: user.loginId,
       role: user.role,
       isActive: user.isActive,
+      isSuperAdmin: user.isSuperAdmin,
       avatarUrl: user.avatarUrl,
       fullName: user.fullName,
       phone: user.phone,

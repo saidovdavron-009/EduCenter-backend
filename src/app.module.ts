@@ -4,6 +4,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import * as Joi from 'joi';
 import { TypeormConfig } from '@config/typeorm.config';
 import { AuthModule } from '@features/auth/auth.module';
+import { AdminsModule } from '@features/admins/admins.module';
 import { StudentsModule } from '@features/students/students.module';
 import { TeachersModule } from '@features/teachers/teachers.module';
 import { GroupsModule } from '@features/groups/groups.module';
@@ -23,7 +24,7 @@ import { ParentsModule } from '@features/parents/parents.module';
 import { ContractsModule } from '@features/contracts/contracts.module';
 import { TasksModule } from '@features/tasks/tasks.module';
 import { TeacherAttendanceModule } from '@features/teacher-attendance/teacher-attendance.module';
-import { TeacherSalariesModule } from '@features/teacher-salaries/teacher-salaries.module';
+import { StaffSalariesModule } from '@features/staff-salaries/staff-salaries.module';
 import { DiscountsModule } from '@features/discounts/discounts.module';
 import { LeadsModule } from '@features/leads/leads.module';
 import { InventoryModule } from '@features/inventory/inventory.module';
@@ -56,6 +57,7 @@ import { UploadsModule } from '@features/uploads/uploads.module';
     ThrottlerModule.forRoot([{ ttl: 60000, limit: 100 }]),
     TypeormConfig,
     AuthModule,
+    AdminsModule,
     StudentsModule,
     TeachersModule,
     GroupsModule,
@@ -75,7 +77,7 @@ import { UploadsModule } from '@features/uploads/uploads.module';
     ContractsModule,
     TasksModule,
     TeacherAttendanceModule,
-    TeacherSalariesModule,
+    StaffSalariesModule,
     DiscountsModule,
     LeadsModule,
     InventoryModule,

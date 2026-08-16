@@ -15,6 +15,10 @@ export class CreateGroupRequest {
   @IsUUID()
   teacherId: string;
 
+  @ApiProperty({ example: 'branch-uuid' })
+  @IsUUID()
+  branchId: string;
+
   @ApiPropertyOptional({ example: 20 })
   @IsOptional() @IsNumber() @Min(1)
   capacity?: number;

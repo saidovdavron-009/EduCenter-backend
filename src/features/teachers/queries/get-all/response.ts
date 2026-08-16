@@ -7,5 +7,6 @@ export class TeacherListItem {
   @ApiProperty({ type: [String] }) subjects: string[];
   @ApiProperty() salary: number;
   @ApiProperty() groupCount: number;
+  @ApiProperty({ nullable: true }) maxGroups: number | null;
   @ApiProperty() isActive: boolean;
 }

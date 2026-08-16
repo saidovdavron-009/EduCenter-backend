@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsOptional, MinLength } from 'class-validator';
+import { IsString, IsOptional, MinLength, IsNumber, Min, IsArray, IsEnum } from 'class-validator';
+import { DayOfWeek } from '../../../../common/types';
 
 export class CreateSubjectRequest {
   @ApiProperty({ example: 'Ingliz tili' })
@@ -16,4 +17,15 @@ export class CreateSubjectRequest {
   @IsOptional()
   @IsString()
   level?: string;
+
+  @ApiProperty({ example: 500000 })
+  @IsNumber()
+  @Min(0)
+  monthlyFee: number;
+
+  @ApiPropertyOptional({ enum: DayOfWeek, isArray: true, description: 'Ushbu fan odatda o\'tiladigan kunlar' })
+  @IsOptional()
+  @IsArray()
+  @IsEnum(DayOfWeek, { each: true })
+  days?: DayOfWeek[];
 }

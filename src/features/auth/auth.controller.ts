@@ -1,13 +1,15 @@
 import {
-  Controller, Post, Get, Body, UseGuards, Req, HttpCode, HttpStatus, Patch, SetMetadata,
+  Controller, Post, Get, Body, UseGuards, Req, Res, HttpCode, HttpStatus, Patch, SetMetadata, UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
-import { Request } from 'express';
+import { ConfigService } from '@nestjs/config';
+import { Request, Response } from 'express';
 import { JwtAuthGuard, IS_PUBLIC_KEY } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { RequestUser, UserRole } from '../../common/types';
+import { setAuthCookies, clearAuthCookies } from '../../common/utils/cookie.util';
 import { LoginHandler } from './commands/login/handler';
 import { LogoutHandler } from './commands/logout/handler';
 import { RefreshTokenHandler } from './commands/refresh-token/handler';
@@ -18,8 +20,6 @@ import { UpdateAvatarHandler } from './commands/update-avatar/handler';
 import { UpdateProfileHandler } from './commands/update-profile/handler';
 import { GetProfileHandler } from './queries/get-profile/handler';
 import { LoginRequest } from './commands/login/request';
-import { LogoutRequest } from './commands/logout/request';
-import { RefreshTokenRequest } from './commands/refresh-token/request';
 import { ForgotPasswordRequest } from './commands/forgot-password/request';
 import { ResetPasswordRequest } from './commands/reset-password/request';
 import { ChangePasswordRequest } from './commands/change-password/request';
@@ -42,32 +42,41 @@ export class AuthController {
     private readonly updateAvatarHandler: UpdateAvatarHandler,
     private readonly updateProfileHandler: UpdateProfileHandler,
     private readonly getProfileHandler: GetProfileHandler,
+    private readonly config: ConfigService,
   ) {}
 
   @Post('login')
   @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Tizimga kirish' })
-  login(@Body() dto: LoginRequest, @Req() req: Request) {
+  async login(@Body() dto: LoginRequest, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const ip = req.ip;
     const userAgent = req.get('user-agent');
-    return this.loginHandler.execute(dto, ip, userAgent);
+    const result = await this.loginHandler.execute(dto, ip, userAgent);
+    setAuthCookies(res, this.config, result.accessToken, result.refreshToken);
+    return { user: result.user };
   }
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Tizimdan chiqish' })
-  logout(@CurrentUser() user: RequestUser, @Body() dto: LogoutRequest) {
-    return this.logoutHandler.execute(user.id, dto.refreshToken);
+  async logout(@CurrentUser() user: RequestUser, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const result = await this.logoutHandler.execute(user.id, req.cookies?.refreshToken);
+    clearAuthCookies(res, this.config);
+    return result;
   }
 
   @Post('refresh')
   @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Access token yangilash' })
-  refresh(@Body() dto: RefreshTokenRequest) {
-    return this.refreshTokenHandler.execute(dto);
+  async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies?.refreshToken;
+    if (!refreshToken) throw new UnauthorizedException('Refresh token topilmadi');
+    const result = await this.refreshTokenHandler.execute({ refreshToken });
+    setAuthCookies(res, this.config, result.accessToken, result.refreshToken);
+    return { message: 'ok' };
   }
 
   @Post('forgot-password')

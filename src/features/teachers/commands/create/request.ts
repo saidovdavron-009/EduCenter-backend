@@ -19,6 +19,10 @@ export class CreateTeacherRequest {
   @IsOptional() @IsNumber() @Min(0)
   experience?: number;
 
+  @ApiPropertyOptional({ example: 3, description: 'Nechta guruhga biriktirish mumkin (bo\'sh — cheklovsiz)' })
+  @IsOptional() @IsNumber() @Min(1)
+  maxGroups?: number;
+
   @ApiPropertyOptional({ enum: SalaryType, default: SalaryType.MONTHLY })
   @IsOptional() @IsEnum(SalaryType)
   salaryType?: SalaryType;

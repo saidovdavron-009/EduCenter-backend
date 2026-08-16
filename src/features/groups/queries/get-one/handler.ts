@@ -11,7 +11,7 @@ export class GetOneGroupHandler {
     const group = await this.repo.findOne({ where: { id } });
     if (!group) throw new NotFoundException('Guruh topilmadi');
 
-    const [students, schedules, countResult] = await Promise.all([
+    const [students, schedules, countResult, branchResult] = await Promise.all([
       this.repo.query(
         `SELECT s.id, s.full_name as "fullName", s.phone, s.avatar_url as "avatarUrl", s.status, gs.joined_at as "joinedAt"
          FROM group_students gs JOIN students s ON s.id = gs.student_id
@@ -24,11 +24,15 @@ export class GetOneGroupHandler {
       this.repo.query(
         `SELECT COUNT(*) FROM group_students WHERE group_id = $1 AND status = 'ACTIVE'`, [id],
       ),
+      group.branchId
+        ? this.repo.query(`SELECT name FROM branches WHERE id = $1`, [group.branchId])
+        : Promise.resolve([]),
     ]);
 
     return {
       ...group,
       currentCount: parseInt(countResult[0]?.count || '0'),
+      branchName: branchResult[0]?.name ?? null,
       students,
       schedules,
     };

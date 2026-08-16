@@ -4,8 +4,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Request } from 'express';
 import { User } from './entities/user.entity';
 import { JwtPayload, RequestUser } from '../../common/types';
+
+function cookieExtractor(req: Request): string | null {
+  return req?.cookies?.accessToken || null;
+}
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +19,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        cookieExtractor,
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
       ignoreExpiration: false,
       secretOrKey: config.get<string>('JWT_ACCESS_SECRET', 'access-secret'),
     });
@@ -25,6 +33,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       where: { id: payload.sub, isActive: true },
     });
     if (!user) throw new UnauthorizedException('Foydalanuvchi topilmadi yoki bloklangan');
-    return { id: user.id, email: user.email, role: user.role };
+    return { id: user.id, email: user.email, role: user.role, isSuperAdmin: user.isSuperAdmin };
   }
 }

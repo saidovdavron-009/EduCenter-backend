@@ -20,6 +20,12 @@ export class Subject {
   @Column({ name: 'icon_url', nullable: true })
   iconUrl: string;
 
+  @Column({ name: 'monthly_fee', type: 'decimal', precision: 12, scale: 2, default: 0 })
+  monthlyFee: number;
+
+  @Column({ type: 'simple-array', nullable: true })
+  days: string[];
+
   @Column({ default: true })
   isActive: boolean;
 

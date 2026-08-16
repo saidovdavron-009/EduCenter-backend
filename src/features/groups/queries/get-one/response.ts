@@ -5,6 +5,8 @@ export class GetOneGroupResponse {
   @ApiProperty() name: string;
   @ApiProperty() subjectId: string;
   @ApiProperty() teacherId: string;
+  @ApiProperty() branchId: string;
+  @ApiProperty() branchName: string;
   @ApiProperty() capacity: number;
   @ApiProperty() currentCount: number;
   @ApiProperty() monthlyFee: number;

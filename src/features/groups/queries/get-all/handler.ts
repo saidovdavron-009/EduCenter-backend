@@ -15,12 +15,13 @@ export class GetAllGroupsHandler {
     let i = 1;
 
     let sql = `
-      SELECT g.id, g.name, s.name as "subjectName", t.full_name as "teacherName",
+      SELECT g.id, g.name, s.name as "subjectName", t.full_name as "teacherName", b.name as "branchName",
              g.capacity, g.monthly_fee as "monthlyFee", g.status, g.created_at as "createdAt",
              COUNT(DISTINCT gs.student_id) FILTER (WHERE gs.status='ACTIVE') as "currentCount"
       FROM groups g
       LEFT JOIN subjects s ON s.id = g.subject_id
       LEFT JOIN teachers t ON t.id = g.teacher_id
+      LEFT JOIN branches b ON b.id = g.branch_id
       LEFT JOIN group_students gs ON gs.group_id = g.id
       WHERE 1=1
     `;
@@ -30,7 +31,7 @@ export class GetAllGroupsHandler {
     if (subjectId) { sql += ` AND g.subject_id = $${i}`; params.push(subjectId); i++; }
     if (teacherId) { sql += ` AND g.teacher_id = $${i}`; params.push(teacherId); i++; }
 
-    sql += ` GROUP BY g.id, s.name, t.full_name ORDER BY g.created_at DESC LIMIT $${i} OFFSET $${i + 1}`;
+    sql += ` GROUP BY g.id, s.name, t.full_name, b.name ORDER BY g.created_at DESC LIMIT $${i} OFFSET $${i + 1}`;
     params.push(limit, offset);
 
     const data = await this.repo.query(sql, params);

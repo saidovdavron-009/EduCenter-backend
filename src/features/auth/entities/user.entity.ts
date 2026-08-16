@@ -24,6 +24,12 @@ export class User {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
+  // There is exactly one super admin (seeded from SUPERADMIN_LOGIN_ID/PASSWORD env
+  // vars) — only they can create/manage other admin accounts. Regular admins
+  // created through the app always get isSuperAdmin: false.
+  @Column({ name: 'is_super_admin', default: false })
+  isSuperAdmin: boolean;
+
   @Column({ name: 'avatar_url', nullable: true })
   avatarUrl: string;
 

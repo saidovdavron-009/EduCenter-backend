@@ -5,6 +5,7 @@ export class GroupListItem {
   @ApiProperty() name: string;
   @ApiProperty() subjectName: string;
   @ApiProperty() teacherName: string;
+  @ApiProperty() branchName: string;
   @ApiProperty() capacity: number;
   @ApiProperty() currentCount: number;
   @ApiProperty() monthlyFee: number;

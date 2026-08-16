@@ -28,6 +28,11 @@ export class Teacher {
   @Column({ type: 'int', nullable: true })
   experience: number;
 
+  // Null means no cap. When set, groups.commands.{create,update} refuse to
+  // assign this teacher past this many concurrently active/full groups.
+  @Column({ name: 'max_groups', type: 'int', nullable: true })
+  maxGroups: number;
+
   @Column({ name: 'salary_type', type: 'enum', enum: SalaryType, default: SalaryType.MONTHLY })
   salaryType: SalaryType;
 
