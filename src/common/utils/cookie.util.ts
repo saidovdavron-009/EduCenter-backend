@@ -5,14 +5,19 @@ const ACCESS_TOKEN_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const REFRESH_TOKEN_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 function cookieOptions(config: ConfigService, maxAge: number) {
-  const isProd = config.get('NODE_ENV') === 'production';
+  // Default to production-safe cookie settings and only relax them for local
+  // dev — NODE_ENV defaults to 'development' (see app.module.ts Joi schema)
+  // when a host simply doesn't set it, which used to silently downgrade
+  // deployed environments to insecure/Lax cookies that cross-site browsers
+  // refuse to send back, breaking login on any host that forgot to set it.
+  const isLocalDev = config.get('NODE_ENV') === 'development';
   return {
     httpOnly: true,
-    secure: isProd,
+    secure: !isLocalDev,
     // Cross-site (different registrable domain) deployments need SameSite=None
     // to have the browser send the cookie at all; that requires Secure too,
-    // which only works over HTTPS, so this only applies in production.
-    sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
+    // which only works over HTTPS, so this only applies outside local dev.
+    sameSite: (isLocalDev ? 'lax' : 'none') as 'none' | 'lax',
     path: '/',
   };
 }
