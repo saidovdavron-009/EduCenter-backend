@@ -2,7 +2,6 @@ import {
   Controller, Post, Get, Body, UseGuards, Req, Res, HttpCode, HttpStatus, Patch, SetMetadata, UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import { JwtAuthGuard, IS_PUBLIC_KEY } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -42,7 +41,6 @@ export class AuthController {
     private readonly updateAvatarHandler: UpdateAvatarHandler,
     private readonly updateProfileHandler: UpdateProfileHandler,
     private readonly getProfileHandler: GetProfileHandler,
-    private readonly config: ConfigService,
   ) {}
 
   @Post('login')
@@ -53,7 +51,7 @@ export class AuthController {
     const ip = req.ip;
     const userAgent = req.get('user-agent');
     const result = await this.loginHandler.execute(dto, ip, userAgent);
-    setAuthCookies(res, this.config, result.accessToken, result.refreshToken);
+    setAuthCookies(res, req, result.accessToken, result.refreshToken);
     return { user: result.user };
   }
 
@@ -63,7 +61,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Tizimdan chiqish' })
   async logout(@CurrentUser() user: RequestUser, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const result = await this.logoutHandler.execute(user.id, req.cookies?.refreshToken);
-    clearAuthCookies(res, this.config);
+    clearAuthCookies(res, req);
     return result;
   }
 
@@ -75,7 +73,7 @@ export class AuthController {
     const refreshToken = req.cookies?.refreshToken;
     if (!refreshToken) throw new UnauthorizedException('Refresh token topilmadi');
     const result = await this.refreshTokenHandler.execute({ refreshToken });
-    setAuthCookies(res, this.config, result.accessToken, result.refreshToken);
+    setAuthCookies(res, req, result.accessToken, result.refreshToken);
     return { message: 'ok' };
   }
 

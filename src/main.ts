@@ -18,6 +18,11 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const port = config.get<number>('PORT', 3000);
 
+  // Render (and most hosts) terminate TLS at a proxy and forward plain HTTP
+  // internally, so req.secure is false unless we trust their X-Forwarded-Proto
+  // header. Cookie security (see cookie.util.ts) depends on this being correct.
+  app.set('trust proxy', 1);
+
   app.useStaticAssets(join(process.cwd(), 'uploads'), { prefix: '/uploads/' });
 
   app.use(
