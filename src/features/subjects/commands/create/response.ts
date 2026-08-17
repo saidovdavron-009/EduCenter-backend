@@ -6,5 +6,6 @@ export class CreateSubjectResponse {
   @ApiProperty({ nullable: true }) description: string | null;
   @ApiProperty({ nullable: true }) level: string | null;
   @ApiProperty() monthlyFee: number;
+  @ApiProperty() durationMonths: number;
   @ApiProperty() createdAt: Date;
 }

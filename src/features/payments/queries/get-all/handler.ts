@@ -9,7 +9,7 @@ export class GetAllPaymentsHandler {
   constructor(@InjectRepository(Payment) private readonly repo: Repository<Payment>) {}
 
   async execute(query: GetAllPaymentsRequest) {
-    const { page = 1, limit = 30, studentId, groupId, status, method, dateFrom, dateTo, month, year } = query;
+    const { page = 1, limit = 30, studentId, groupId, status, method, dateFrom, dateTo, month, year, debtorsOnly } = query;
     const offset = (page - 1) * limit;
     const params: any[] = [];
     let i = 1;
@@ -26,7 +26,8 @@ export class GetAllPaymentsHandler {
 
     if (studentId) { sql += ` AND p.student_id = $${i}`; params.push(studentId); i++; }
     if (groupId) { sql += ` AND p.group_id = $${i}`; params.push(groupId); i++; }
-    if (status) { sql += ` AND p.status = $${i}`; params.push(status); i++; }
+    if (debtorsOnly) { sql += ` AND p.status IN ('PENDING', 'OVERDUE')`; }
+    else if (status) { sql += ` AND p.status = $${i}`; params.push(status); i++; }
     if (method) { sql += ` AND p.method = $${i}`; params.push(method); i++; }
     if (dateFrom) { sql += ` AND p.paid_at >= $${i}`; params.push(dateFrom); i++; }
     if (dateTo) { sql += ` AND p.paid_at <= $${i}`; params.push(dateTo); i++; }

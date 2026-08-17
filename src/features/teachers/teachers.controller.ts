@@ -8,10 +8,12 @@ import { UserRole, RequestUser } from '../../common/types';
 import { CreateTeacherHandler } from './commands/create/handler';
 import { UpdateTeacherHandler } from './commands/update/handler';
 import { DeleteTeacherHandler } from './commands/delete/handler';
+import { ResetTeacherPasswordHandler } from './commands/reset-password/handler';
 import { GetOneTeacherHandler } from './queries/get-one/handler';
 import { GetAllTeachersHandler } from './queries/get-all/handler';
 import { CreateTeacherRequest } from './commands/create/request';
 import { UpdateTeacherRequest } from './commands/update/request';
+import { ResetTeacherPasswordRequest } from './commands/reset-password/request';
 import { GetAllTeachersRequest } from './queries/get-all/request';
 
 @ApiTags('Teachers')
@@ -23,6 +25,7 @@ export class TeachersController {
     private readonly createHandler: CreateTeacherHandler,
     private readonly updateHandler: UpdateTeacherHandler,
     private readonly deleteHandler: DeleteTeacherHandler,
+    private readonly resetPasswordHandler: ResetTeacherPasswordHandler,
     private readonly getOneHandler: GetOneTeacherHandler,
     private readonly getAllHandler: GetAllTeachersHandler,
   ) {}
@@ -76,4 +79,12 @@ export class TeachersController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'O\'qituvchini o\'chirish' })
   delete(@Param('id', ParseUUIDPipe) id: string) { return this.deleteHandler.execute(id); }
+
+  @Post(':id/reset-password')
+  @Roles(UserRole.ADMIN)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'O\'qituvchi parolini yangilash (faqat Admin, joriy parolsiz)' })
+  resetPassword(@Param('id', ParseUUIDPipe) id: string, @Body() dto: ResetTeacherPasswordRequest) {
+    return this.resetPasswordHandler.execute(id, dto);
+  }
 }

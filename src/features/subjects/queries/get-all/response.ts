@@ -5,6 +5,7 @@ export class SubjectItem {
   @ApiProperty({ nullable: true }) description: string | null;
   @ApiProperty({ nullable: true }) level: string | null;
   @ApiProperty() monthlyFee: number;
+  @ApiProperty() durationMonths: number;
   @ApiProperty({ type: [String], nullable: true }) days: string[] | null;
   @ApiProperty() isActive: boolean;
   @ApiProperty() groupCount: number;

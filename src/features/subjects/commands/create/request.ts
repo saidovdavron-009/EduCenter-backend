@@ -23,6 +23,11 @@ export class CreateSubjectRequest {
   @Min(0)
   monthlyFee: number;
 
+  @ApiProperty({ example: 3, description: 'Fan necha oy davom etadi' })
+  @IsNumber()
+  @Min(1)
+  durationMonths: number;
+
   @ApiPropertyOptional({ enum: DayOfWeek, isArray: true, description: 'Ushbu fan odatda o\'tiladigan kunlar' })
   @IsOptional()
   @IsArray()

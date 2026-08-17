@@ -3,5 +3,6 @@ export class GetOneRoomResponse {
   branchId: string;
   name: string;
   capacity: number;
+  floor: number | null;
   isActive: boolean;
 }

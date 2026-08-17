@@ -23,6 +23,9 @@ export class Subject {
   @Column({ name: 'monthly_fee', type: 'decimal', precision: 12, scale: 2, default: 0 })
   monthlyFee: number;
 
+  @Column({ name: 'duration_months', type: 'int', default: 1 })
+  durationMonths: number;
+
   @Column({ type: 'simple-array', nullable: true })
   days: string[];
 

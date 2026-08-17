@@ -6,6 +6,7 @@ import { StudentsController } from './students.controller';
 import { CreateStudentHandler } from './commands/create/handler';
 import { UpdateStudentHandler } from './commands/update/handler';
 import { DeleteStudentHandler } from './commands/delete/handler';
+import { ResetStudentPasswordHandler } from './commands/reset-password/handler';
 import { GetOneStudentHandler } from './queries/get-one/handler';
 import { GetAllStudentsHandler } from './queries/get-all/handler';
 
@@ -16,6 +17,7 @@ import { GetAllStudentsHandler } from './queries/get-all/handler';
     CreateStudentHandler,
     UpdateStudentHandler,
     DeleteStudentHandler,
+    ResetStudentPasswordHandler,
     GetOneStudentHandler,
     GetAllStudentsHandler,
   ],

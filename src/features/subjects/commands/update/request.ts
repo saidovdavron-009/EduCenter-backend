@@ -8,6 +8,7 @@ export class UpdateSubjectRequest {
   @ApiPropertyOptional() @IsOptional() @IsString() level?: string;
   @ApiPropertyOptional() @IsOptional() @IsBoolean() isActive?: boolean;
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0) monthlyFee?: number;
+  @ApiPropertyOptional({ description: 'Fan necha oy davom etadi' }) @IsOptional() @IsNumber() @Min(1) durationMonths?: number;
   @ApiPropertyOptional({ enum: DayOfWeek, isArray: true })
   @IsOptional()
   @IsArray()

@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsUUID, IsEnum, IsNumber, Min, IsDateString } from 'class-validator';
+import { IsOptional, IsUUID, IsEnum, IsNumber, Min, IsDateString, IsBoolean } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PaymentMethod, PaymentStatus } from '../../../../common/types';
 export class GetAllPaymentsRequest {
@@ -13,4 +13,7 @@ export class GetAllPaymentsRequest {
   @ApiPropertyOptional() @IsOptional() @IsDateString() dateTo?: string;
   @ApiPropertyOptional() @IsOptional() @Type(() => Number) @IsNumber() month?: number;
   @ApiPropertyOptional() @IsOptional() @Type(() => Number) @IsNumber() year?: number;
+  // Qarzdorlar filtri: kutilayotgan yoki muddati o'tgan barcha to'lovlarni ko'rsatadi (status'dan mustaqil).
+  @ApiPropertyOptional({ description: 'Faqat qarzdorlar (PENDING yoki OVERDUE)' })
+  @IsOptional() @Type(() => Boolean) @IsBoolean() debtorsOnly?: boolean;
 }

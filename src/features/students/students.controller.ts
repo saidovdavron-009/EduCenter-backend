@@ -11,10 +11,12 @@ import { UserRole, RequestUser } from '../../common/types';
 import { CreateStudentHandler } from './commands/create/handler';
 import { UpdateStudentHandler } from './commands/update/handler';
 import { DeleteStudentHandler } from './commands/delete/handler';
+import { ResetStudentPasswordHandler } from './commands/reset-password/handler';
 import { GetOneStudentHandler } from './queries/get-one/handler';
 import { GetAllStudentsHandler } from './queries/get-all/handler';
 import { CreateStudentRequest } from './commands/create/request';
 import { UpdateStudentRequest } from './commands/update/request';
+import { ResetStudentPasswordRequest } from './commands/reset-password/request';
 import { GetAllStudentsRequest } from './queries/get-all/request';
 
 @ApiTags('Students')
@@ -26,6 +28,7 @@ export class StudentsController {
     private readonly createHandler: CreateStudentHandler,
     private readonly updateHandler: UpdateStudentHandler,
     private readonly deleteHandler: DeleteStudentHandler,
+    private readonly resetPasswordHandler: ResetStudentPasswordHandler,
     private readonly getOneHandler: GetOneStudentHandler,
     private readonly getAllHandler: GetAllStudentsHandler,
   ) {}
@@ -83,5 +86,13 @@ export class StudentsController {
   @ApiOperation({ summary: 'O\'quvchini o\'chirish' })
   delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.deleteHandler.execute(id);
+  }
+
+  @Post(':id/reset-password')
+  @Roles(UserRole.ADMIN)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'O\'quvchi parolini yangilash (faqat Admin, joriy parolsiz)' })
+  resetPassword(@Param('id', ParseUUIDPipe) id: string, @Body() dto: ResetStudentPasswordRequest) {
+    return this.resetPasswordHandler.execute(id, dto);
   }
 }

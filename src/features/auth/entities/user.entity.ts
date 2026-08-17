@@ -2,7 +2,7 @@ import {
   Entity, PrimaryGeneratedColumn, Column,
   CreateDateColumn, UpdateDateColumn, OneToOne, OneToMany,
 } from 'typeorm';
-import { UserRole, Gender } from '../../../common/types';
+import { UserRole, Gender } from '@common/types';
 
 @Entity('users')
 export class User {
