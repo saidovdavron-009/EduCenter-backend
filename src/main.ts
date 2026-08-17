@@ -4,6 +4,7 @@ import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { join } from 'path';
+import axios from 'axios';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -12,6 +13,27 @@ import { AllExceptionsFilter } from '@common/filters/http-exception.filter';
 import { ResponseInterceptor } from '@common/interceptors/response.interceptor';
 import { seedSuperAdmin } from '@common/utils/superadmin-seed.util';
 import { configureSwagger } from '@config/swagger.config';
+
+const SELF_PING_INTERVAL_MS = 2 * 60 * 1000;
+
+// Render's free tier spins the service down after 15 minutes with no inbound
+// HTTP traffic. A self-ping every 2 minutes to the service's own public URL
+// keeps it awake — pinging localhost wouldn't count, since Render only
+// tracks requests that actually go through its edge. RENDER_EXTERNAL_URL is
+// set automatically by Render; SELF_PING_URL is an explicit override for
+// other hosts. If neither is set (e.g. local dev), this does nothing.
+function startSelfPing(config: ConfigService) {
+  const baseUrl = config.get<string>('SELF_PING_URL') || config.get<string>('RENDER_EXTERNAL_URL');
+  if (!baseUrl) return;
+
+  const url = `${baseUrl.replace(/\/+$/, '')}/api/v1/health`;
+  setInterval(() => {
+    axios.get(url, { timeout: 10000 }).catch(() => {
+      // Best-effort — a failed ping just means we skip this cycle, not fatal.
+    });
+  }, SELF_PING_INTERVAL_MS);
+  console.log(`⏰ Self-ping enabled: ${url} every ${SELF_PING_INTERVAL_MS / 60000} min`);
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: ['error', 'warn', 'log'] });
@@ -74,6 +96,8 @@ async function bootstrap() {
   await app.listen(port);
   console.log(`\n✅ Server: http://localhost:${port}/api/v1`);
   console.log(`📚 Swagger: http://localhost:${port}/docs\n`);
+
+  startSelfPing(config);
 }
 
 bootstrap();

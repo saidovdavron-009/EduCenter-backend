@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import * as Joi from 'joi';
 import { TypeormConfig } from '@config/typeorm.config';
+import { HealthController } from './health.controller';
 import { AuthModule } from '@features/auth/auth.module';
 import { AdminsModule } from '@features/admins/admins.module';
 import { StudentsModule } from '@features/students/students.module';
@@ -85,5 +86,6 @@ import { UploadsModule } from '@features/uploads/uploads.module';
     SettingsModule,
     UploadsModule,
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}
