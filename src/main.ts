@@ -38,7 +38,7 @@ function startSelfPing(config: ConfigService) {
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {logger: ['error', 'warn', 'log']});
     const config = app.get(ConfigService);
-    const port = config.get<number>('PORT', 3004);
+    const port = config.get<number>('PORT', 3001);
 
     // Render (and most hosts) terminate TLS at a proxy and forward plain HTTP
     // internally, so req.secure is false unless we trust their X-Forwarded-Proto
