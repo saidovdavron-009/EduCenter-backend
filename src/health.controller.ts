@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+ import { Controller, Get } from '@nestjs/common';
 
 // Public, guard-free endpoint — used both for manual uptime checks and by
 // the self-ping in main.ts that keeps Render's free tier from sleeping.

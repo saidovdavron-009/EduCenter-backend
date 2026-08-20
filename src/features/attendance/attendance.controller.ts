@@ -87,14 +87,14 @@ export class AttendanceController {
   @Roles(UserRole.ADMIN, UserRole.TEACHER)
   @ApiOperation({ summary: 'Davomat belgilash' })
   mark(@Body() dto: MarkAttendanceRequest, @CurrentUser() user: RequestUser) {
-    return this.markHandler.execute(dto, user.id);
+    return this.markHandler.execute(dto, user);
   }
 
   @Post('bulk')
   @Roles(UserRole.ADMIN, UserRole.TEACHER)
   @ApiOperation({ summary: 'Ommaviy davomat belgilash' })
   markBulk(@Body() dto: MarkBulkAttendanceRequest, @CurrentUser() user: RequestUser) {
-    return this.markBulkHandler.execute(dto, user.id);
+    return this.markBulkHandler.execute(dto, user);
   }
 
   @Patch(':id')

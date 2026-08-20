@@ -8,4 +8,7 @@ export class MarkAttendanceRequest {
   @ApiProperty({ enum: AttendanceStatus }) @IsEnum(AttendanceStatus) status: AttendanceStatus;
   @ApiProperty({ example: '2024-03-15' }) @IsDateString() date: string;
   @ApiPropertyOptional() @IsOptional() @IsString() note?: string;
+  // Faqat super-admin uchun — dars vaqti oynasidan tashqarida belgilashga
+  // ruxsat beradi. Sabab majburiy, audit_logs ga yoziladi.
+  @ApiPropertyOptional() @IsOptional() @IsString() lateCorrectionReason?: string;
 }

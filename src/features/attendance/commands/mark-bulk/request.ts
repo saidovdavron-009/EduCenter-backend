@@ -13,4 +13,5 @@ export class MarkBulkAttendanceRequest {
   @ApiProperty() @IsUUID() scheduleId: string;
   @ApiProperty({ example: '2024-03-15' }) @IsDateString() date: string;
   @ApiProperty({ type: [AttendanceItem] }) @IsArray() @ValidateNested({ each: true }) @Type(() => AttendanceItem) attendances: AttendanceItem[];
+  @ApiPropertyOptional() @IsOptional() @IsString() lateCorrectionReason?: string;
 }

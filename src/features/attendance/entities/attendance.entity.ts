@@ -11,6 +11,11 @@ export class Attendance {
   @Column({ name: 'schedule_id', type: 'uuid' })
   scheduleId: string;
 
+  // Shu davomat qaysi dars sessiyasiga (LessonSession) tegishli — mavjud
+  // bo'lmasa (masalan schedule keyinroq o'zgargan bo'lsa) belgilanmasdan qoladi.
+  @Column({ name: 'lesson_session_id', type: 'uuid', nullable: true })
+  lessonSessionId: string | null;
+
   @Column({ name: 'student_id', type: 'uuid' })
   studentId: string;
 

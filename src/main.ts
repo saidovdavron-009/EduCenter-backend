@@ -1,3 +1,10 @@
+// Barcha davomat/dars vaqti tekshiruvlari (assertWithinLessonWindow va h.k.)
+// serverning `new Date()` va local vaqt satrlarini bir xil zonada solishtirishga
+// tayanadi. Hosting muhiti (masalan Render) konteynerni odatda UTC bilan
+// ishga tushiradi — buni aniq Asia/Tashkent ga qadab qo'ymasak, dars vaqti
+// tekshiruvi haqiqiy mahalliy vaqtdan soatlab siljib ketishi mumkin edi.
+process.env.TZ = process.env.TZ || 'Asia/Tashkent';
+
 import {NestFactory, Reflector} from '@nestjs/core';
 import {NestExpressApplication} from '@nestjs/platform-express';
 import {ValidationPipe, ClassSerializerInterceptor} from '@nestjs/common';

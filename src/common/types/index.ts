@@ -167,6 +167,14 @@ export enum TeacherAttendanceStatus {
   ON_TIME = 'ON_TIME',
   LATE = 'LATE',
   ABSENT = 'ABSENT',
+  EXCUSED = 'EXCUSED',
+}
+
+export enum LessonSessionStatus {
+  PLANNED = 'PLANNED',
+  CONDUCTED = 'CONDUCTED',
+  NOT_CONDUCTED = 'NOT_CONDUCTED',
+  CANCELLED = 'CANCELLED',
 }
 
 export enum DiscountType {

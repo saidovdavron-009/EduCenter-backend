@@ -8,6 +8,7 @@ export class CreateGroupResponse {
   @ApiProperty() branchId: string;
   @ApiProperty() capacity: number;
   @ApiProperty() monthlyFee: number;
+  @ApiProperty() monthlyPriceForTeacher: number | null;
   @ApiProperty({ enum: GroupStatus }) status: GroupStatus;
   @ApiProperty() createdAt: Date;
 }

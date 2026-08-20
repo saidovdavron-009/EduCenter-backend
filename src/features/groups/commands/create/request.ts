@@ -31,6 +31,12 @@ export class CreateGroupRequest {
   @IsNumber() @Min(0)
   monthlyFee: number;
 
+  // O'qituvchining shu guruhdan oladigan oylik ulushi — bitta dars narxi
+  // shundan hisoblanadi (see [[teacher-payroll]]).
+  @ApiPropertyOptional({ example: 300000 })
+  @IsOptional() @IsNumber() @Min(0)
+  monthlyPriceForTeacher?: number;
+
   @ApiPropertyOptional({ example: '2024-01-01' })
   @IsOptional() @IsDateString()
   startDate?: string;

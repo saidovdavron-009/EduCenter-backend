@@ -11,6 +11,8 @@ import { GetPublicSettingsHandler } from './queries/get-public-settings/handler'
 import { GetHolidaysHandler } from './queries/get-holidays/handler';
 import { GetAuditLogsHandler } from './queries/get-audit-logs/handler';
 import { GetSmsLogsHandler } from './queries/get-sms-logs/handler';
+import { LateCorrectionService } from './services/late-correction.service';
+import { AuditLogService } from './services/audit-log.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AppSetting, Holiday, SmsLog, AuditLog])],
@@ -18,7 +20,8 @@ import { GetSmsLogsHandler } from './queries/get-sms-logs/handler';
   providers: [
     UpsertSettingHandler, CreateHolidayHandler, UpdateHolidayHandler, DeleteHolidayHandler,
     GetAllSettingsHandler, GetPublicSettingsHandler, GetHolidaysHandler, GetAuditLogsHandler, GetSmsLogsHandler,
+    LateCorrectionService, AuditLogService,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, LateCorrectionService, AuditLogService],
 })
 export class SettingsModule {}

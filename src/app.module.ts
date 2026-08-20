@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { ScheduleModule } from '@nestjs/schedule';
 import * as Joi from 'joi';
 import { TypeormConfig } from '@config/typeorm.config';
 import { HealthController } from './health.controller';
@@ -11,6 +12,7 @@ import { TeachersModule } from '@features/teachers/teachers.module';
 import { GroupsModule } from '@features/groups/groups.module';
 import { SubjectsModule } from '@features/subjects/subjects.module';
 import { SchedulesModule } from '@features/schedules/schedules.module';
+import { LessonSessionsModule } from '@features/lesson-sessions/lesson-sessions.module';
 import { AttendanceModule } from '@features/attendance/attendance.module';
 import { GradesModule } from '@features/grades/grades.module';
 import { PaymentsModule } from '@features/payments/payments.module';
@@ -25,7 +27,9 @@ import { ParentsModule } from '@features/parents/parents.module';
 import { ContractsModule } from '@features/contracts/contracts.module';
 import { TasksModule } from '@features/tasks/tasks.module';
 import { TeacherAttendanceModule } from '@features/teacher-attendance/teacher-attendance.module';
+import { StaffAttendanceModule } from '@features/staff-attendance/staff-attendance.module';
 import { StaffSalariesModule } from '@features/staff-salaries/staff-salaries.module';
+import { TeacherPayrollModule } from '@features/teacher-payroll/teacher-payroll.module';
 import { DiscountsModule } from '@features/discounts/discounts.module';
 import { LeadsModule } from '@features/leads/leads.module';
 import { InventoryModule } from '@features/inventory/inventory.module';
@@ -56,6 +60,7 @@ import { UploadsModule } from '@features/uploads/uploads.module';
       validationOptions: { abortEarly: true },
     }),
     ThrottlerModule.forRoot([{ ttl: 60000, limit: 100 }]),
+    ScheduleModule.forRoot(),
     TypeormConfig,
     AuthModule,
     AdminsModule,
@@ -64,6 +69,7 @@ import { UploadsModule } from '@features/uploads/uploads.module';
     GroupsModule,
     SubjectsModule,
     SchedulesModule,
+    LessonSessionsModule,
     AttendanceModule,
     GradesModule,
     PaymentsModule,
@@ -78,7 +84,9 @@ import { UploadsModule } from '@features/uploads/uploads.module';
     ContractsModule,
     TasksModule,
     TeacherAttendanceModule,
+    StaffAttendanceModule,
     StaffSalariesModule,
+    TeacherPayrollModule,
     DiscountsModule,
     LeadsModule,
     InventoryModule,

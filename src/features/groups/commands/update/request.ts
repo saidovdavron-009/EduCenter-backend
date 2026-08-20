@@ -10,6 +10,7 @@ export class UpdateGroupRequest {
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(1) capacity?: number;
   @ApiPropertyOptional() @IsOptional() @IsString() level?: string;
   @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0) monthlyFee?: number;
+  @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0) monthlyPriceForTeacher?: number;
   @ApiPropertyOptional({ enum: GroupStatus }) @IsOptional() @IsEnum(GroupStatus) status?: GroupStatus;
   @ApiPropertyOptional() @IsOptional() @IsDateString() startDate?: string;
   @ApiPropertyOptional() @IsOptional() @IsDateString() endDate?: string;

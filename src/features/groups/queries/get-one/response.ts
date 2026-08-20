@@ -10,6 +10,7 @@ export class GetOneGroupResponse {
   @ApiProperty() capacity: number;
   @ApiProperty() currentCount: number;
   @ApiProperty() monthlyFee: number;
+  @ApiProperty() monthlyPriceForTeacher: number | null;
   @ApiProperty({ enum: GroupStatus }) status: GroupStatus;
   @ApiProperty({ type: 'array' }) students: any[];
   @ApiProperty({ type: 'array' }) schedules: any[];
